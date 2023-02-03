@@ -12,15 +12,24 @@ const Login = (props) => {
   const [formIsValid, setFormIsValid] = useState(false);
 
   useEffect(() => {
-    // makes sure email is proper format and password is correct
-    setFormIsValid(
-      enteredEmail.includes('@') && enteredPassword.trim().length > 6
-    );
-  }, [])
+    // wait 500 to see the next keystroke to check form validity to prevent too much request traffic
+    const identifier = setTimeout(() => {
+      // makes sure email is proper format and password is correct
+      setFormIsValid(
+        enteredEmail.includes('@') && enteredPassword.trim().length > 6
+      ); 
+    }, 500);
+    
+    // clears timeout after 500ms 
+    return () => {
+      clearTimeout(identifier);
+    };
+
+    // dependencies: rerun this function for every log in but only if enteredEmail or enteredPassword has changed
+  }, [enteredEmail, enteredPassword]);
 
   const emailChangeHandler = (event) => {
     setEnteredEmail(event.target.value);
-
 
   };
 

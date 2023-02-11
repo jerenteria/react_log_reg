@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // creates context(app component wide state) object
 const AuthContext = React.createContext({
     isLoggedIn: false,
-    onLogOut: () => {},
-    onLogIn: (email, password) => {},
+    onLogout: () => {},
+    onLogin: (email, password) => {},
 });
 
 export const AuthContextProvider = (props) => {
@@ -20,13 +20,13 @@ export const AuthContextProvider = (props) => {
     }, []);
 
 
-    const logOutHandler = () => {
+    const logoutHandler = () => {
         // when logging out clear isLoggedIn from localStorage in browser so user is not logged back in automatically when visitin website
         localStorage.removeItem('isLoggedIn');
         setIsLoggedIn(false);
     };
 
-    const logInHandler = () => {
+    const loginHandler = () => {
         //isLoggedIn is a storage system in the browser independent of react go to application in inspect
         localStorage.setItem('isLoggedIn', '1')
         setIsLoggedIn(true);
@@ -36,8 +36,8 @@ export const AuthContextProvider = (props) => {
         <AuthContext.Provider 
         value={{
             isLoggedIn: isLoggedIn,
-            onLogout: logOutHandler,
-            onLogIn: logInHandler
+            onLogout: logoutHandler,
+            onLogin: loginHandler
         }}
         >
             {props.children}

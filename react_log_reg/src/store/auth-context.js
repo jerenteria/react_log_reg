@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 // creates context(app component wide state) object
 const AuthContext = React.createContext({
